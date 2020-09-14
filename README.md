@@ -1,3 +1,5 @@
+cu
+
 # Trabalho-Final-CAL
 
 To Do:
