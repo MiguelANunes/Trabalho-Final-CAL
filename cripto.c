@@ -1,0 +1,1 @@
+// criptografa e descriptografa dados em um arquivo
