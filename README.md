@@ -15,7 +15,7 @@ To Do:
       + Calcular tempos de execução e plotar num gráfico (Miguel: Ver atividade 2)
 
 
-Método do cristiano para verificar primalidade:
+Método do Cristiano para verificar primalidade:
    + gera um número aleatório, se não for primo repita até gerar um primo:
    + se for par soma 1 e verrifica se é primo
    + se for impar, soma 2 e verifica se é primo
