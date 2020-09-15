@@ -1,1 +1,0 @@
-// fatora por força bruta a chave pública
