@@ -1,6 +1,6 @@
-// criptografa e descriptografa dados em um arquivo
+// criptografa e descriptografa(?) dados em um arquivo
 #include"cripto.h"
 
 void fun2(){
-    printf("ddd");
+    cout << "ccc";
 }
