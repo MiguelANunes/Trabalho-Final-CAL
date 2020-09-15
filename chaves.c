@@ -5,3 +5,8 @@
 // primos aleatorios
 // verificação probabilistica de primalidade
 // inverso modular
+#include"chaves.h"
+
+void fun1(){
+    printf("ccc");
+}
