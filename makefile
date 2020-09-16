@@ -9,25 +9,25 @@
 
 CC = g++   # compilador 
 
-all: link
+all: link # mudar
 
 run: 
 	./main
 
+link: main
+	${CC} -o main chaves.o cripto.o bruta.o main.o -lgmpxx -lgmp
+
 main: chaves cripto bruta  main.cpp
-	${CC} main.cpp -c -lgmpxx -lgmp 
+	${CC} -Wall main.cpp -c
 
 chaves:
-	${CC} chaves.cpp -c -lgmpxx -lgmp
+	${CC} -c chaves.cpp  
 
 cripto:
-	${CC} cripto.cpp -c -lgmpxx -lgmp
+	${CC} -Wall cripto.cpp -c
 
 bruta:
-	${CC} bruta.cpp -c -lgmpxx -lgmp
-
-link: main
-	${CC} -o main chaves.o cripto.o bruta.o main.o
+	${CC} -Wall bruta.cpp -c 
 
 clean:
 	rm *.o

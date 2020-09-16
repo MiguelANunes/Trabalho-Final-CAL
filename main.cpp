@@ -9,7 +9,6 @@ using namespace std;
 
 int main(int argc, char const *argv[]){
     cout << "aaa";
-    fun1();
     fun2();
     fun3();
     cout << endl;
