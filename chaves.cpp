@@ -7,13 +7,18 @@
 // verificação probabilistica de primalidade
 // inverso modular
 
-void primo_aleatorio(mpz_t resultado){ 
-    // retorna um número primo aleatório de tamanho
-    gmp_randstate_t estado; // estado aleatório necessário para gerar números aleatórios
-    mpz_t primo; // ver no manual sobre alocação de tamanho específico (sec. 5.6 acho)
+void primo_aleatorio(mpz_t resultado, int total_bits){ 
+    // retorna um número primo aleatório com <total_bits> bits
 
-    mpz_init(primo); // inicializando a variável, como recomendado pelo manual da biblioteca
+    gmp_randstate_t estado; // estado aleatório necessário para gerar números aleatórios
+    mpz_t primo;
+
+    mpz_init2(primo,total_bits); // inicializando a variável, como recomendado pelo manual da biblioteca
     gmp_randinit_default(estado); // inicializando o estado aleatório
+
+    gmp_randseed_ui(estado,time(NULL)); // define a seed do gerador aleatório
+    mpz_urandomb(primo,estado,total_bits); // gera um número aleatório de até <total_bits> bits
+    mpz_out_str(NULL,10,primo); // printando o número gerado
 
 
     // para geração de números, usar o método do Cristiano
