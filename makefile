@@ -8,6 +8,7 @@
 # Isto é, um comando para: calcular as chaves, criptografar, descriptografar, tentar o brute-force e um geral
 
 CC = g++   # compilador 
+FLAGS = -Wall -c
 
 all: link # mudar
 
@@ -18,17 +19,17 @@ link: main
 	${CC} -o main chaves.o cripto.o bruta.o main.o -lgmpxx -lgmp
 
 main: chaves cripto bruta  main.cpp
-	${CC} -Wall main.cpp -c
+	${CC} ${FLAGS} main.cpp
 
 chaves:
-	${CC} -c chaves.cpp  
+	${CC} ${FLAGS} chaves.cpp  
 
 cripto:
-	${CC} -Wall cripto.cpp -c
+	${CC} ${FLAGS} cripto.cpp 
 
 bruta:
-	${CC} -Wall bruta.cpp -c 
+	${CC} ${FLAGS} bruta.cpp
 
 clean:
-	rm *.o
-	rm main
+	rm *.o main 
+ 

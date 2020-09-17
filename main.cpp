@@ -8,15 +8,14 @@
 using namespace std;
 
 int main(int argc, char const *argv[]){
-    // cout << "aaa";
-    // fun2();
-    // fun3();
-
     mpz_t teste;
+    int bits;
 
-    mpz_init2(teste,128); // inicializando a variável, como recomendado pelo manual da biblioteca
-    primo_aleatorio(teste,128);
+    bits = 64;
+    mpz_init2(teste,bits);
 
-    cout << endl;
+    primo_aleatorio(teste,bits);
+    
+
     return 0;
 }
