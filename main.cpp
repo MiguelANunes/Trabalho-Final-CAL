@@ -7,7 +7,7 @@ using namespace std;
 /*
 ####################
 Ideias:
-    Definir a variável de total de bits como global ?
+    
 ####################
 */
 int main(int argc, char const *argv[]){
@@ -17,10 +17,14 @@ int main(int argc, char const *argv[]){
         cout << "Digite o total de bits:" << endl;
         cin >> TOTALBITS;
     }
-    mpz_t teste;
-    mpz_init2(teste,TOTALBITS);
-    primo_aleatorio(teste);
     
+    mpz_t E, N, D;
+    mpz_init2(E,TOTALBITS);
+    mpz_init2(N,TOTALBITS);
+    mpz_init2(D,TOTALBITS);
+
+    chave_publica(E,N);
+    // chave_privada(E,N,D);
 
     return 0;
 }

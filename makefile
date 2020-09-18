@@ -12,9 +12,9 @@ FLAGS = -Wall -c
 
 all: link # mudar
 
-run: 
-	./main
-
+run: # https://stackoverflow.com/questions/2214575/passing-arguments-to-make-run
+	./main $(BITS) 
+# uso: make run BITS=<total de bits>
 link: main
 	${CC} -o main chaves.o cripto.o bruta.o main.o -lgmpxx -lgmp
 
