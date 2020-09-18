@@ -4,7 +4,8 @@ To Do:
    - Algoritmo RSA
       + Implementar algoritmo RSA
       + Implementar algoritmo de Euclides Estendido
-      + Implementar gerador de chaves pública e privada
+      + Implementar gerador de privada
+      + Chaves Públicas [ok]
       + Verificação de Primalidade de um número [ok]
       + Gerar Primos aleatórios                 [ok]
       + Verificar primos relativos
