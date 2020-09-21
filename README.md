@@ -8,7 +8,7 @@ To Do:
       + Chaves Públicas [ok]
       + Verificação de Primalidade de um número [ok]
       + Gerar Primos aleatórios                 [ok]
-      + Verificar primos relativos
+      + Verificar primos relativos              [ok]
       + Criptografar e descriptografar dados de um arquivo usando potência modular
       + Algoritmo de Força Bruta
    - Vídeo
