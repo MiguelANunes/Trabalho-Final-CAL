@@ -1,17 +1,10 @@
 #include"chaves.h"
-// geração das chaves publica e privada
-// primo relativo
-// algoritmo de euclides estendido
+// geração das chaves publica e privada [ok]
+// primo relativo [ok]
+// algoritmo de euclides estendido [ok]
 // primos aleatorios  [ok]
 // verificação probabilistica de primalidade [ok]
-// inverso modular
-
-    // https://www.google.com/search?channel=fs&client=ubuntu&q=modular+multiplicative+inverse
-    // https://cp-algorithms.com/algebra/module-inverse.html
-    // https://www.geeksforgeeks.org/multiplicative-inverse-under-modulo-m/
-    // https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm#Pseudocode
-    // https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
-    // https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Decryption
+// inverso modular [ok]
 
 int TOTALBITS; // necessário definir aqui tbm pq no header "main_header" a variável esta definida como extern
 // isto é, o valor dela é definida em algum lugar e o linker descobre onde é isso
@@ -40,7 +33,7 @@ void chave_publica(mpz_t E, mpz_t N, mpz_t PQ){
 }
 
 void chave_privada(mpz_t D, mpz_t E, mpz_t PQ){
-	inverso_modular(E,D,PQ);
+	inverso_modular(D,E,PQ);
 }
 
 void inverso_modular(mpz_t D, mpz_t E, mpz_t PQ){
@@ -73,8 +66,8 @@ void inverso_modular(mpz_t D, mpz_t E, mpz_t PQ){
 		mpz_set(Auxiliar,B);
 		mpz_fdiv_r(B,A,B);
 		mpz_set(A,Auxiliar);
+		
 		mpz_set(Auxiliar,Y);
-
 		mpz_mul(Auxiliar2,Quociente,Y);
 		mpz_sub(Y,X,Auxiliar2);
 		mpz_set(X,Auxiliar);

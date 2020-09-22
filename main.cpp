@@ -22,10 +22,14 @@ int main(int argc, char const *argv[]){
     mpz_init2(E,TOTALBITS);
     mpz_init2(N,TOTALBITS);
     mpz_init2(D,TOTALBITS);
-	mpz_init2(PQ, TOTALBITS);	
-	
+	mpz_init2(PQ, TOTALBITS);
+
     chave_publica(E,N,PQ);
- //   chave_privada(D,E,PQ);
+    chave_privada(D,E,PQ);
+
+	gmp_printf("Chave Pública: <%Zd, %Zd>\n",E,N);
+	gmp_printf("Chave Privada: <%Zd, %Zd>\n",D,N);
+
 
 	// chave publica = <E,N>
 	// chave privada = <D,N>
