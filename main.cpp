@@ -18,13 +18,17 @@ int main(int argc, char const *argv[]){
         cin >> TOTALBITS;
     }
     
-    mpz_t E, N, D;
+    mpz_t E, N, D, PQ;
     mpz_init2(E,TOTALBITS);
     mpz_init2(N,TOTALBITS);
     mpz_init2(D,TOTALBITS);
+	mpz_init2(PQ, TOTALBITS);
 
-    chave_publica(E,N);
-    // chave_privada(E,N,D);
+    chave_publica(E,N,PQ);
+    chave_privada(D,E,PQ);
+
+	// chave publica = <E,N>
+	// chave privada = <D,N>
 
     return 0;
 }

@@ -6,12 +6,19 @@
 // verificação probabilistica de primalidade [ok]
 // inverso modular
 
+    // https://www.google.com/search?channel=fs&client=ubuntu&q=modular+multiplicative+inverse
+    // https://cp-algorithms.com/algebra/module-inverse.html
+    // https://www.geeksforgeeks.org/multiplicative-inverse-under-modulo-m/
+    // https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm#Pseudocode
+    // https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
+    // https://en.wikipedia.org/wiki/RSA_(cryptosystem)#Decryption
+
 int TOTALBITS; // necessário definir aqui tbm pq no header "main_header" a variável esta definida como extern
 // isto é, o valor dela é definida em algum lugar e o linker descobre onde é isso
 // nesse caso, é definida na main
 // para acessar o valor dela em outros arquivos, tenho que declarar essa variável neste arquivo
 
-void chave_publica(mpz_t E, mpz_t N){
+void chave_publica(mpz_t E, mpz_t N, mpz_t PQ){
     mpz_t PrimeiroPrimo, SegundoPrimo, ProdutoPrimos, PrimoRelativoProduto;
 
     mpz_init2(PrimeiroPrimo, TOTALBITS); // P
@@ -21,36 +28,79 @@ void chave_publica(mpz_t E, mpz_t N){
     primo_aleatorio(PrimeiroPrimo);
     primo_aleatorio(SegundoPrimo);
     mpz_mul(ProdutoPrimos, PrimeiroPrimo, SegundoPrimo); // N = P*Q
+
+	mpz_sub_ui(PrimeiroPrimo, PrimeiroPrimo, 1); //P-1
+	mpz_sub_ui(SegundoPrimo, SegundoPrimo, 1); // Q-1
     primo_relativo(PrimoRelativoProduto, PrimeiroPrimo, SegundoPrimo); // E
 
+	mpz_mul(PQ, PrimeiroPrimo, SegundoPrimo); // (P-1)(Q-1)
     mpz_set(E,PrimoRelativoProduto);
     mpz_set(N,ProdutoPrimos);
 }
 
-void chave_privada(mpz_t E, mpz_t N, mpz_t D){
+void chave_privada(mpz_t D, mpz_t E, mpz_t PQ){
+	inverso_modular(E,D,PQ);
+}
 
+void inverso_modular(mpz_t D, mpz_t E, mpz_t PQ){
+	// calcula o inverso modular de E no modulo PQ e armazena em D
+	// AX + BY = 1 --> AX cong. 1 (mod B)
+	// A == E
+	// X == D
+	// B == PQ --> PQ = (P-1)(Q-1) onde P e Q são os primos aleatórios
+	// Y não importa, mas é necessário para o calculo
+
+	mpz_t Quociente, A, B, X, Y, Auxiliar, Auxiliar2;
+
+	mpz_init2(Quociente,TOTALBITS);
+	mpz_init2(A,TOTALBITS);
+	mpz_init2(B,TOTALBITS);
+	mpz_init2(X,TOTALBITS);
+	mpz_init2(Y,TOTALBITS);
+	mpz_init2(Auxiliar,TOTALBITS);
+	mpz_init2(Auxiliar2,TOTALBITS);
+
+	mpz_set(A,E);
+	mpz_set(B,PQ);
+	mpz_set_ui(X,1);
+	mpz_set_ui(Y,0);
+
+	while(mpz_cmp_ui(A,1) > 0){
+		mpz_fdiv_q(Quociente,A,B);
+		
+		// Algoritmo de Euclides p/ MDC
+		mpz_set(Auxiliar,B);
+		mpz_fdiv_r(B,A,B);
+		mpz_set(A,Auxiliar);
+		mpz_set(Auxiliar,Y);
+
+		mpz_mul(Auxiliar2,Quociente,Y);
+		mpz_sub(Y,X,Auxiliar2);
+		mpz_set(X,Auxiliar);
+	}
+	
+	if(mpz_sgn(X) == -1)
+		mpz_add(X,X,PQ);
+
+	mpz_set(D,X);
 }
 
 void primo_relativo(mpz_t Resultado, mpz_t PrimeiroPrimo, mpz_t SegundoPrimo){
     // calcula um primo relativo de (PrimeiroPrimo-1)(SegundoPrimo-1)
-    mpz_t Primo1, Primo2, PR, MDC, E;
+    mpz_t PR, MDC, E;
     gmp_randstate_t Estado;
 
     gmp_randinit_default(Estado);
-    mpz_init2(Primo1, TOTALBITS);
-    mpz_init2(Primo2, TOTALBITS);
     mpz_init2(PR, TOTALBITS);
     mpz_init2(MDC, TOTALBITS);
     mpz_init2(E, TOTALBITS);
     gmp_randseed_ui(Estado,time(NULL));
 
-    mpz_sub_ui(Primo1,PrimeiroPrimo,1); //  P-1
-    mpz_sub_ui(Primo2,SegundoPrimo,1); //  Q-1
-    mpz_mul(PR,Primo1,Primo2); // (P-1)(Q-1)
-    mpz_urandomm(E,Estado,PR); // Gerando um _e_ aleatório
-    mpz_gcd(MDC,E,PR); // Calculando o MDC de e com (P-1)(Q-1)1
+    mpz_mul(PR,PrimeiroPrimo,SegundoPrimo); // (P-1)(Q-1)
+    mpz_urandomm(E,Estado,PR); // Gerando um E aleatório
+    mpz_gcd(MDC,E,PR); // Calculando o MDC de E com (P-1)(Q-1)
 
-    while(mpz_cmp_ui(MDC,1) != 0){ // enquanto o MDC não for 1, procure por outro e
+    while(mpz_cmp_ui(MDC,1) != 0){ // enquanto o MDC não for 1, procure por outro E
         mpz_urandomm(E,Estado,PR);
         mpz_gcd(MDC,E,PR);
     }
@@ -82,7 +132,7 @@ void primo_aleatorio(mpz_t Resultado){
         mpz_urandomb(PrimoGerado,Estado,TOTALBITS);
 
     mpz_set(Resultado,PrimoGerado); 
-    mpz_clear(PrimoGerado);
+    // mpz_clear(PrimoGerado);
     gmp_randclear(Estado);
 }
 
