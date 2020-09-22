@@ -24,15 +24,16 @@ void chave_publica(mpz_t E, mpz_t N, mpz_t PQ){
     mpz_init2(PrimeiroPrimo, TOTALBITS); // P
     mpz_init2(SegundoPrimo, TOTALBITS); // Q
     mpz_init2(ProdutoPrimos, TOTALBITS); // N
-
+    mpz_init2(PrimoRelativoProduto,TOTALBITS);
+	
     primo_aleatorio(PrimeiroPrimo);
     primo_aleatorio(SegundoPrimo);
     mpz_mul(ProdutoPrimos, PrimeiroPrimo, SegundoPrimo); // N = P*Q
-
+    
 	mpz_sub_ui(PrimeiroPrimo, PrimeiroPrimo, 1); //P-1
 	mpz_sub_ui(SegundoPrimo, SegundoPrimo, 1); // Q-1
     primo_relativo(PrimoRelativoProduto, PrimeiroPrimo, SegundoPrimo); // E
-
+    
 	mpz_mul(PQ, PrimeiroPrimo, SegundoPrimo); // (P-1)(Q-1)
     mpz_set(E,PrimoRelativoProduto);
     mpz_set(N,ProdutoPrimos);
@@ -89,14 +90,14 @@ void primo_relativo(mpz_t Resultado, mpz_t PrimeiroPrimo, mpz_t SegundoPrimo){
     // calcula um primo relativo de (PrimeiroPrimo-1)(SegundoPrimo-1)
     mpz_t PR, MDC, E;
     gmp_randstate_t Estado;
-
     gmp_randinit_default(Estado);
+	
     mpz_init2(PR, TOTALBITS);
     mpz_init2(MDC, TOTALBITS);
     mpz_init2(E, TOTALBITS);
     gmp_randseed_ui(Estado,time(NULL));
-
-    mpz_mul(PR,PrimeiroPrimo,SegundoPrimo); // (P-1)(Q-1)
+    
+    mpz_mul(PR,PrimeiroPrimo,SegundoPrimo); // (P-1)(Q-1)	
     mpz_urandomm(E,Estado,PR); // Gerando um E aleatório
     mpz_gcd(MDC,E,PR); // Calculando o MDC de E com (P-1)(Q-1)
 
@@ -104,16 +105,9 @@ void primo_relativo(mpz_t Resultado, mpz_t PrimeiroPrimo, mpz_t SegundoPrimo){
         mpz_urandomm(E,Estado,PR);
         mpz_gcd(MDC,E,PR);
     }
-
-    // cout << "(P-1)(Q-1): " << endl;
-    // mpz_out_str(NULL,10,PR);
-    // cout << endl << "e: " << endl;
-    // mpz_out_str(NULL,10,E);
-    // cout << endl;
-
+    
     mpz_set(Resultado,E);
     gmp_randclear(Estado);
-    // mpz_clears(Primo1,Primo2,PR,MDC,E);
 }
 
 void primo_aleatorio(mpz_t Resultado){ 
