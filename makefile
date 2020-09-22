@@ -13,8 +13,14 @@ FLAGS = -Wall -c
 all: link # mudar
 
 run: # https://stackoverflow.com/questions/2214575/passing-arguments-to-make-run
-	./main $(BITS) 
-# uso: make run BITS=<total de bits>
+	./main $(BITS) $(ARQ) 
+# uso: make run BITS=<total de bits> ARQ=<total de arquivos>
+# usar estritamente nesta ordem
+# ou seja, temos os seguinte comandos validos 
+# 	make run BITS=x ARQ=y
+# 	make run BITS=x
+# 	make run 
+
 link: main
 	${CC} -o main chaves.o cripto.o bruta.o main.o -lgmpxx -lgmp
 
@@ -31,5 +37,5 @@ bruta:
 	${CC} ${FLAGS} bruta.cpp
 
 clean:
-	rm *.o main 
+	rm *.o main criptografado*
  
