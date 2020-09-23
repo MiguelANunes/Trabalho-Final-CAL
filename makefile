@@ -17,7 +17,7 @@ run: # https://stackoverflow.com/questions/2214575/passing-arguments-to-make-run
 # uso: make run BITS=<total de bits> ARQ=<total de arquivos>
 # usar estritamente nesta ordem
 # ou seja, temos os seguinte comandos validos 
-# 	make run BITS=x ARQ=y
+# 	make run BITS=x ARQ=nome_arquivo
 # 	make run BITS=x
 # 	make run 
 
@@ -37,5 +37,5 @@ bruta:
 	${CC} ${FLAGS} bruta.cpp
 
 clean:
-	rm *.o main criptografado* descriptografado*
+	rm *.o main CRIPTO* DECRIPTO*
  

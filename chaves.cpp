@@ -13,9 +13,13 @@ void chave_publica(mpz_t E, mpz_t N, mpz_t PQ){
     mpz_init2(SegundoPrimo, TOTALBITS); // Q
     mpz_init2(ProdutoPrimos, TOTALBITS); // N
     mpz_init2(PrimoRelativoProduto,TOTALBITS);
-	
-    primo_aleatorio(PrimeiroPrimo);
-    primo_aleatorio(SegundoPrimo);
+
+	primo_aleatorio(PrimeiroPrimo);
+	do{ // garantindo que P e Q são diferentes
+    	primo_aleatorio(SegundoPrimo); // mudar p/ receber um segundo argumento
+		// que faz essa comparação dentro da função
+	}while(mpz_cmp(PrimeiroPrimo,SegundoPrimo) == 0);
+    
     mpz_mul(ProdutoPrimos, PrimeiroPrimo, SegundoPrimo); // N = P*Q
     
 	mpz_sub_ui(PrimeiroPrimo, PrimeiroPrimo, 1); //P-1
@@ -33,7 +37,7 @@ void chave_privada(mpz_t D, mpz_t E, mpz_t PQ){
 
 void inverso_modular(mpz_t D, mpz_t E, mpz_t PQ){
 	// calcula o inverso modular de E no modulo PQ e armazena em D
-	// AX + BY = 1 --> AX cong. 1 (mod B)
+	// AX + BY = 1 <--> AX cong. 1 (mod B)
 	// A == E
 	// X == D
 	// B == PQ --> PQ = (P-1)(Q-1) onde P e Q são os primos aleatórios
