@@ -11,5 +11,7 @@ To Do:
       + Verificar primos relativos                  [ok]
       + Criptografar e descriptografar dados de um arquivo usando potência modular [ok]
       + Algoritmo de Força Bruta                    [ok]
+      + Terminar Menu da Main
+      + (Miguel) Arrumar detalhes do força bruta
    - Vídeo
       + Calcular tempos de execução e plotar num gráfico (Miguel: Ver atividade 2)
