@@ -5,7 +5,7 @@
 void fun3(){ // não foi usada, pode apagar (?)
     cout << "ddd";
 }
-//MAIN UTILIZADO PARA TESTES: (pode apagar dps)
+//MAIN UTILIZADO PARA TESTES: (pode apagar dps) https://medium.com/swlh/the-prime-number-test-a-brute-force-approach-a25b9d6b231
 /*
 #include"main_header.h"
 #include"chaves.h"
