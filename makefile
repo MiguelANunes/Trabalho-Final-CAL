@@ -37,5 +37,5 @@ bruta:
 	${CC} ${FLAGS} bruta.cpp
 
 clean:
-	rm *.o main criptografado*
+	rm *.o main criptografado* descriptografado*
  

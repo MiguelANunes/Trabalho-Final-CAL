@@ -1,10 +1,5 @@
+// geração das chaves publica e privada
 #include"chaves.h"
-// geração das chaves publica e privada [ok]
-// primo relativo [ok]
-// algoritmo de euclides estendido [ok]
-// primos aleatorios  [ok]
-// verificação probabilistica de primalidade [ok]
-// inverso modular [ok]
 
 int TOTALBITS; // necessário definir aqui tbm pq no header "main_header" a variável esta definida como extern
 // isto é, o valor dela é definida em algum lugar e o linker descobre onde é isso
@@ -54,23 +49,23 @@ void inverso_modular(mpz_t D, mpz_t E, mpz_t PQ){
 	mpz_init2(Auxiliar,TOTALBITS);
 	mpz_init2(Auxiliar2,TOTALBITS);
 
-	mpz_set(A,E);
+	mpz_set(A,E);  // copiando as entradas para variáveis que posso alterar
 	mpz_set(B,PQ);
 	mpz_set_ui(X,1);
 	mpz_set_ui(Y,0);
 
 	while(mpz_cmp_ui(A,1) > 0){
-		mpz_fdiv_q(Quociente,A,B);
+		mpz_fdiv_q(Quociente,A,B); // Q = A/B
 		
-		// Algoritmo de Euclides p/ MDC
-		mpz_set(Auxiliar,B);
-		mpz_fdiv_r(B,A,B);
-		mpz_set(A,Auxiliar);
+		mpz_set(Auxiliar,B); // Auxiliar = B
+		mpz_fdiv_r(B,A,B); // B = A % B
+		mpz_set(A,Auxiliar); // A = Auxiliar
+		mpz_set(Auxiliar, Y); // Auxiliar = Y
 		
-		mpz_set(Auxiliar,Y);
-		mpz_mul(Auxiliar2,Quociente,Y);
-		mpz_sub(Y,X,Auxiliar2);
-		mpz_set(X,Auxiliar);
+		mpz_set(Auxiliar2,X); // Auxiliar2 = X
+		mpz_submul(Auxiliar2, Quociente, Y);  // Auxiliar2 = Auxiliar2 - Quociente * Y
+		mpz_set(Y,Auxiliar2); // Y = Auxiliar2 <==> Y = X - Quociente * Y
+		mpz_set(X,Auxiliar); // X = Auxiliar
 	}
 	
 	if(mpz_sgn(X) == -1)
@@ -129,7 +124,7 @@ bool provavelmente_primo(mpz_t PossivelPrimo, gmp_randstate_t EstadoAleatorio){
     if(mpz_divisible_ui_p(PossivelPrimo,3) != 0 || mpz_divisible_ui_p(PossivelPrimo,5)  != 0 ||
        mpz_divisible_ui_p(PossivelPrimo,7) != 0 || mpz_divisible_ui_p(PossivelPrimo,11) != 0 || 
        mpz_divisible_ui_p(PossivelPrimo,13)!= 0 || mpz_divisible_ui_p(PossivelPrimo,17) != 0 || 
-    mpz_even_p(PossivelPrimo) != 0){
+       mpz_even_p(PossivelPrimo) != 0){
         return false;
     }// verificando se é divisivel por 3, 5, 7, 11, 13, 17 ou se é par
 

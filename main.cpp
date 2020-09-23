@@ -36,9 +36,10 @@ int main(int argc, char const *argv[]){
 
 	gmp_printf("Chave Pública: <%Zd, %Zd>\n",E,N);
 	gmp_printf("Chave Privada: <%Zd, %Zd>\n",D,N);
+	gmp_printf("(P-1)(Q-1): %Zd\n",PQ);
 
 	criptografar_arquivo(E,N);
-	
+	descriptografar_arquivo(D,N);
 
     return 0;
 }

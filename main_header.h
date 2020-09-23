@@ -5,5 +5,6 @@
 #include<iostream> // para fins de debugging
 
 extern int TOTALBITS; 
+extern int TOTALARQ;
 // "constante" que determina o tamnho de bits para serem usados durante a execução
 // não é do tipo const pq é necessário definir esse valor dentro da main
