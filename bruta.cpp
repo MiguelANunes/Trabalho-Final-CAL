@@ -24,16 +24,17 @@ void forcabruta_quadrado(mpz_t Fator1, mpz_t Fator2, mpz_t NFatorar){
 void forcabruta_aleatoria(mpz_t Fator1, mpz_t Fator2, mpz_t NFatorar){
 	// aleatoriamente gera numeros primos e verifica se dividem NFatorar
 
-	mpz_t PrimoAleatorio, zero;
+	mpz_t PrimoAleatorio, um;
 	mpz_init2(PrimoAleatorio,TOTALBITS);
-	mpz_init2(zero,TOTALBITS);
+	mpz_init2(um,TOTALBITS);
+	mpz_set_ui(um,1);
 	// devido a maneira que fizemos a função de gerar primos aleatórios
 	// é necessário esse workaround
 	// não tem efeito no tempo de computação da função
 
 	while(true){
-		primo_aleatorio(PrimoAleatorio, zero);
-		if(mpz_divisible_p(NFatorar, PrimoAleatorio) && (mpz_cmp_ui(PrimoAleatorio, 1) > 0)){
+		primo_aleatorio(PrimoAleatorio, um);
+		if(mpz_divisible_p(NFatorar, PrimoAleatorio)){
 			mpz_set(Fator1, PrimoAleatorio);
 			mpz_divexact(Fator2, NFatorar, PrimoAleatorio);
 			return;
