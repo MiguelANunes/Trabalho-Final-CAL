@@ -2,8 +2,11 @@
 #pragma once
 #include<stdio.h> // necessário p/ IO de números da GMP
 #include<gmp.h>
-#include<iostream> // para fins de debugging
+#include<iostream>
+#include<string>
 
 extern int TOTALBITS; 
 // "constante" que determina o tamnho de bits para serem usados durante a execução
 // não é do tipo const pq é necessário definir esse valor dentro da main
+extern std::string FILENAME; // definindo o nome do arquivo como uma constante global
+// pra facilitar a vida

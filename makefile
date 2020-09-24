@@ -4,17 +4,15 @@
 # http://story-of-a-programmer.blogspot.com/2015/04/makefile-tutorial.html <- Melhor
 
 
-# To Do: Criar comandos para as funções específicas
-# Isto é, um comando para: calcular as chaves, criptografar, descriptografar, tentar o brute-force e um geral
-
 CC = g++   # compilador 
 FLAGS = -Wall -c
 
 all: link # mudar
 
-run: # https://stackoverflow.com/questions/2214575/passing-arguments-to-make-run
+run: 
 	./main $(BITS) $(ARQ) 
-# uso: make run BITS=<total de bits> ARQ=<total de arquivos>
+# https://stackoverflow.com/questions/2214575/passing-arguments-to-make-run
+# uso: make run BITS=<total de bits> ARQ=<nome_arquivo_sem_extensão>
 # usar estritamente nesta ordem
 # ou seja, temos os seguinte comandos validos 
 # 	make run BITS=x ARQ=nome_arquivo

@@ -2,6 +2,7 @@
 #include"chaves.h"
 #include"cripto.h"
 #include"bruta.h"
+#include<chrono>
 
 using namespace std;
 
@@ -32,7 +33,7 @@ int main(int argc, char const *argv[]){ // arrumar, ver aula 31/08
 		cin >> opcao;
 
 		switch(opcao){
-			case 1:
+			case 1:{
 				if(TOTALBITS == -1){
 					cout << "Digite o número de bits:" << endl;
 					cin >> TOTALBITS;
@@ -43,9 +44,10 @@ int main(int argc, char const *argv[]){ // arrumar, ver aula 31/08
 				}
 				chave_publica(E,N,PQ); // chave publica = <E,N>
 				gmp_printf("Chave Pública (E,N): <%Zd, %Zd>\n",E,N);
+			}
 			break;
 
-			case 2:
+			case 2:{
 				if(TOTALBITS == -1){
 					cout << "Digite o número de bits:" << endl;
 					cin >> TOTALBITS;
@@ -61,9 +63,10 @@ int main(int argc, char const *argv[]){ // arrumar, ver aula 31/08
 				}
 				chave_privada(D,E,PQ); // chave privada = <D,N>
 				gmp_printf("Chave Privada (D,N): <%Zd, %Zd>\n",D,N);
+			}
 			break;
 
-			case 3:
+			case 3:{
 				if(FILENAME == "-"){
 					cout << "Digite o nome do arquivo sem a extensão .txt:" << endl;
 					cin >> FILENAME;
@@ -71,11 +74,122 @@ int main(int argc, char const *argv[]){ // arrumar, ver aula 31/08
 				FILENAME += ".txt";
 				cout << "Criptografando arquivo " << FILENAME << " ..." << endl;
 				criptografar_arquivo(E,N);
+			}
 			break;
 
-			case 4:
+			case 4:{
 				cout << "Descriptografando arquivo CRIPTO-" << FILENAME << " ..." << endl;
 				descriptografar_arquivo(D,N);
+			}
+			break;
+
+			case 5:{
+				int SubEscolha=0;
+				mpz_t P1, Q1;
+
+				mpz_init2(P1,TOTALBITS);
+				mpz_init2(Q1,TOTALBITS);
+
+				cout << "Foram Implementados dois métodos de fatoração por Força Bruta" << endl;
+				cout << "O primeiro verifica todos os possiveis divisores de N somando de 1 em 1 até a raiz quadrada de N" << endl;
+				cout << "O segundo gera números primos aleatóriamente e verifica se dividem N" << endl;
+				cout << "Qual quer executar ?" << endl;
+				cout << "\t[1] Raiz Quadrada" << endl;
+				cout << "\t[2] Aleatórios" << endl;
+				cout << "\t[3] Ambos, Raiz Quadrada primeiro" << endl;
+				cout << "\t[4] Ambos, Aleatórios primeiro" << endl;
+				cout << "\t[5] Voltar" << endl;
+				cin >> SubEscolha;
+
+				switch(SubEscolha){
+					case 1:{
+						cout << "Executando método da Raiz Quadrda..." << endl;
+
+						auto inicio = chrono::high_resolution_clock::now();
+						forcabruta_quadrado(P1,Q1,N);
+						auto termino = chrono::high_resolution_clock::now();
+
+						cout << "Terminou de Fatorar pelo método da Raiz Quadrada." << endl;
+						cout << "Encontrou os seguintes divisores de N:" << endl;
+						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
+
+						chrono::duration<double> decorrido = termino - inicio;
+						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+					}
+					break;
+
+					case 2:{
+						cout << "Executando método dos Primos Aleatórios..." << endl;
+
+						auto inicio = chrono::high_resolution_clock::now();
+						forcabruta_aleatoria(P1,Q1,N);
+						auto termino = chrono::high_resolution_clock::now();
+
+						cout << "Terminou de Fatorar pelo método dos Primos Aleatórios." << endl;
+						cout << "Encontrou os seguintes divisores de N:" << endl;
+						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
+						chrono::duration<double> decorrido = termino - inicio;
+						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+					}
+					break;
+
+					case 3:{
+						cout << "Executando ambas, começando pela Raiz Quadrda..." << endl;
+
+						auto inicio = chrono::high_resolution_clock::now();
+						forcabruta_quadrado(P1,Q1,N);
+						auto termino = chrono::high_resolution_clock::now();
+
+						cout << "Terminou de Fatorar pelo método da Raiz Quadrada." << endl;
+						cout << "Encontrou os seguintes divisores de N:" << endl;
+						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
+						chrono::duration<double> decorrido = termino - inicio;
+						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+
+						cout << "Executando método dos Primos Aleatórios..." << endl;
+
+						inicio = chrono::high_resolution_clock::now();
+						forcabruta_aleatoria(P1,Q1,N);
+						termino = chrono::high_resolution_clock::now();
+
+						cout << "Terminou de Fatorar pelo método dos Primos Aleatórios" << endl;
+						cout << "Encontrou os seguintes divisores de N:" << endl;
+						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
+						decorrido = termino - inicio;
+						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+					}
+					break;
+
+					case 4:{
+						cout << "Executando ambas, começando pelo Primos Aleatórios..." << endl;
+
+						auto inicio = chrono::high_resolution_clock::now();
+						forcabruta_aleatoria(P1,Q1,N);
+						auto termino = chrono::high_resolution_clock::now();
+
+						cout << "Terminou de Fatorar pelo método dos Primos Aleatórios." << endl;
+						cout << "Encontrou os seguintes divisores de N:" << endl;
+						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
+						chrono::duration<double> decorrido = termino - inicio;
+						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+
+						cout << "Executando método da Raiz Quadrda..." << endl;
+						inicio = chrono::high_resolution_clock::now();
+						forcabruta_quadrado(P1,Q1,N);
+						termino = chrono::high_resolution_clock::now();
+
+						cout << "Terminou de Fatorar pelo método da Raiz Quadrada." << endl;
+						cout << "Encontrou os seguintes divisores de N:" << endl;
+						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
+						decorrido = termino - inicio;
+						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+					}
+					break;
+
+					case 5:
+					break;
+				}
+			}
 			break;
 
 			case 6:
@@ -83,9 +197,6 @@ int main(int argc, char const *argv[]){ // arrumar, ver aula 31/08
 			break;
 		}
 	}
-
-	//gmp_printf("(P-1)(Q-1): %Zd\n",PQ);
-
 
     return 0;
 }

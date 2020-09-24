@@ -14,11 +14,9 @@ void chave_publica(mpz_t E, mpz_t N, mpz_t PQ){
     mpz_init2(ProdutoPrimos, TOTALBITS); // N
     mpz_init2(PrimoRelativoProduto,TOTALBITS);
 
-	primo_aleatorio(PrimeiroPrimo);
-	do{ // garantindo que P e Q são diferentes
-    	primo_aleatorio(SegundoPrimo); // mudar p/ receber um segundo argumento
-		// que faz essa comparação dentro da função
-	}while(mpz_cmp(PrimeiroPrimo,SegundoPrimo) == 0);
+	// segundo argumento garante que gero dois números primos diferentes
+	primo_aleatorio(PrimeiroPrimo,SegundoPrimo);
+	primo_aleatorio(SegundoPrimo,PrimeiroPrimo);
     
     mpz_mul(ProdutoPrimos, PrimeiroPrimo, SegundoPrimo); // N = P*Q
     
@@ -102,7 +100,7 @@ void primo_relativo(mpz_t Resultado, mpz_t PrimeiroPrimo, mpz_t SegundoPrimo){
     gmp_randclear(Estado);
 }
 
-void primo_aleatorio(mpz_t Resultado){ 
+void primo_aleatorio(mpz_t Resultado, mpz_t Verificador){ 
     // retorna um número primo aleatório com <TOTALBITS> bits
     gmp_randstate_t Estado; 
     mpz_t PrimoGerado;
@@ -114,8 +112,13 @@ void primo_aleatorio(mpz_t Resultado){
     mpz_urandomb(PrimoGerado,Estado,TOTALBITS); 
     // gera um número aleatório de até <TOTALBITS> bits
 
-    while(!(provavelmente_primo(PrimoGerado, Estado)))
-        mpz_urandomb(PrimoGerado,Estado,TOTALBITS);
+	if(mpz_cmp_ui(Verificador, 0) == 0){ // não foi gerado outro numero primo
+		while(!(provavelmente_primo(PrimoGerado, Estado)))
+        	mpz_urandomb(PrimoGerado,Estado,TOTALBITS);
+	}else{ // foi e tenho que garantir que gero dois primos diferentes
+		while(!(provavelmente_primo(PrimoGerado, Estado)) || (mpz_cmp(PrimoGerado,Verificador) == 0))
+        	mpz_urandomb(PrimoGerado,Estado,TOTALBITS);
+	}
 
     mpz_set(Resultado,PrimoGerado); 
     // mpz_clear(PrimoGerado);

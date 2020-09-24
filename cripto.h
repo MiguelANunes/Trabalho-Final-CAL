@@ -6,5 +6,5 @@
 #include<sstream>
 using namespace std;
 
-void criptografar_arquivo(mpz_t E, mpz_t N, string Filename);
-void descriptografar_arquivo(mpz_t D, mpz_t N, string Filename);
+void criptografar_arquivo(mpz_t E, mpz_t N);
+void descriptografar_arquivo(mpz_t D, mpz_t N);

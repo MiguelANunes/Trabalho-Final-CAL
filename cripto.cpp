@@ -2,13 +2,13 @@
 #include"cripto.h"
 #include"chaves.h"
 
-int TOTALARQ;
+string FILENAME;
 
-void criptografar_arquivo(mpz_t E, mpz_t N, string Filename){
-	// cifra o arquivo Filename.txt
+void criptografar_arquivo(mpz_t E, mpz_t N){
+	// cifra o arquivo FILENAME.txt
 	// o arquivo cifrado terá o nome 
-	// CRIPTO-Filename.txt
-	string SourceFilename, OutFilename, TextoLido;
+	// CRIPTO-FILENAME.txt
+	string SourceFILENAME, OutFILENAME, TextoLido;
 	fstream ArquivoCifrar;
 	ofstream ArquivoCifrado;
 
@@ -25,12 +25,12 @@ void criptografar_arquivo(mpz_t E, mpz_t N, string Filename){
 	// não da pra fazer vector de mpz_t, mas da pra converter um mpz_t pra char*
 	// este que por sua vez pode ser convertido em string e colocado num vector
 
-	SourceFilename = Filename;
-	OutFilename = "CRIPTO-"+Filename;
-	ArquivoCifrar.open(SourceFilename);
+	SourceFILENAME = FILENAME;
+	OutFILENAME = "CRIPTO-"+FILENAME;
+	ArquivoCifrar.open(SourceFILENAME);
 
 	if(!ArquivoCifrar.is_open()){
-		cerr << "Não conseguiu abrir arquivo: " << SourceFilename << endl;
+		cerr << "Não conseguiu abrir arquivo: " << SourceFILENAME << endl;
 		return;
 	}
 
@@ -75,7 +75,7 @@ void criptografar_arquivo(mpz_t E, mpz_t N, string Filename){
 	TextoASCII.clear();
 	ArquivoCifrar.close();
 
-	ArquivoCifrado.open(OutFilename);
+	ArquivoCifrado.open(OutFILENAME);
 	for(unsigned int j = 0; j < TextoCifrado.size(); j++){
 		for(unsigned int k = 0; k < TextoCifrado[j].size(); k++){
 			// escrevendo o texto cifrado no arquivo
@@ -90,29 +90,30 @@ void criptografar_arquivo(mpz_t E, mpz_t N, string Filename){
 
 	TextoCifrado.clear();
 	ArquivoCifrado.close();
+	cout << "Arquivo Criptografado salvo em " << OutFILENAME << endl;
 }
 
-void descriptografar_arquivo(mpz_t D, mpz_t N, string Filename){
-	// decifra o texto em um arquivo cifrado chamado CRIPTO-Filename.txt
-	// o arquivo resultante tera nome DECRIPTO-Filename.txt
+void descriptografar_arquivo(mpz_t D, mpz_t N){
+	// decifra o texto em um arquivo cifrado chamado CRIPTO-FILENAME.txt
+	// o arquivo resultante tera nome DECRIPTO-FILENAME.txt
 
 	mpz_t LetraDecifrada;
 	mpz_init2(LetraDecifrada, TOTALBITS);
 
-	string SourceFilename, OutFilename, TextoLido, TextoDecifrado, StringAuxiliar;
+	string SourceFILENAME, OutFILENAME, TextoLido, TextoDecifrado, StringAuxiliar;
 	vector<int> LinhaASCII;
 	vector<vector<int>> TextoASCII;
 
 	fstream ArquivoCifrado; // lê do arquivo cifrado
 	ofstream ArquivoDecifrado; // escreve no arquivo decifrado
 
-	SourceFilename = "CRIPTO-"+Filename;
-	OutFilename = "DECRIPTO-"+Filename;
-	ArquivoCifrado.open(SourceFilename);
+	SourceFILENAME = "CRIPTO-"+FILENAME;
+	OutFILENAME = "DECRIPTO-"+FILENAME;
+	ArquivoCifrado.open(SourceFILENAME);
 	TextoDecifrado = "";
 
 	if(!ArquivoCifrado.is_open()){
-		cerr << "Não conseguiu abrir arquivo: " << SourceFilename << endl;
+		cerr << "Não conseguiu abrir arquivo: " << SourceFILENAME << endl;
 		return;
 	}
 
@@ -141,7 +142,7 @@ void descriptografar_arquivo(mpz_t D, mpz_t N, string Filename){
 	}
 
 	ArquivoCifrado.close();
-	ArquivoDecifrado.open(OutFilename);
+	ArquivoDecifrado.open(OutFILENAME);
 
 	for(unsigned int j = 0; j < TextoASCII.size(); j++){
 		for(unsigned int k = 0; k < TextoASCII[j].size(); k++){
@@ -158,5 +159,5 @@ void descriptografar_arquivo(mpz_t D, mpz_t N, string Filename){
 	// escrevendo no arquivo decifrado
 	ArquivoDecifrado << TextoDecifrado;
 	ArquivoDecifrado.close();
-
+	cout << "Arquivo Descriptografado salvo em " << OutFILENAME << endl;
 }
