@@ -13,7 +13,7 @@ void forcabruta_quadrado(mpz_t Fator1, mpz_t Fator2, mpz_t NFatorar){
     mpz_sqrt(Raiz,NFatorar);
 
     for( ; mpz_cmp (FatorTestado, Raiz) < 0; mpz_add_ui(FatorTestado, FatorTestado, 1)){
-		if(mpz_divisible_p(NFatorar, FatorTestado) != 0){ // NFatorar é divisivel por FatorTestado
+		if(mpz_divisible_p(NFatorar, FatorTestado) != 0){
 			mpz_set(Fator1, FatorTestado);
 			mpz_divexact(Fator2, NFatorar, FatorTestado);
 			return;

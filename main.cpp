@@ -6,20 +6,28 @@
 
 using namespace std;
 
-int main(int argc, char const *argv[]){ // arrumar, ver aula 31/08
+int main(int argc, char const *argv[]){
 
+	mpz_t E, N, D, PQ;
 	TOTALBITS = -1;
 	FILENAME = "-";
 
 	if(argc == 3){
 		TOTALBITS = atoi(argv[1]);
 		FILENAME.assign(argv[2]);
+		mpz_init2(E,TOTALBITS);
+		mpz_init2(N,TOTALBITS);
+		mpz_init2(D,TOTALBITS);
+		mpz_init2(PQ, TOTALBITS);
 	}else if(argc == 2){
 		TOTALBITS = atoi(argv[1]);
+		mpz_init2(E,TOTALBITS);
+		mpz_init2(N,TOTALBITS);
+		mpz_init2(D,TOTALBITS);
+		mpz_init2(PQ, TOTALBITS);
 	}
 
 	int opcao = 0;
-	mpz_t E, N, D, PQ;
 
 
 	while(true){
@@ -42,8 +50,9 @@ int main(int argc, char const *argv[]){ // arrumar, ver aula 31/08
 					mpz_init2(D,TOTALBITS);
 					mpz_init2(PQ, TOTALBITS);
 				}
-				chave_publica(E,N,PQ); // chave publica = <E,N>
-				gmp_printf("Chave Pública (E,N): <%Zd, %Zd>\n",E,N);
+				cout << "Gerando a chave pública..." << endl;
+				chave_publica(E,N,PQ);
+				gmp_printf("Chave Pública <E,N>: <%Zd, %Zd>\n",E,N);
 			}
 			break;
 
@@ -59,10 +68,11 @@ int main(int argc, char const *argv[]){ // arrumar, ver aula 31/08
 				if(mpz_cmp_ui(E,0) == 0){
 					cout << "Gerando a chave pública..." << endl;
 					chave_publica(E,N,PQ); // chave publica = <E,N>
-					gmp_printf("Chave Pública (E,N): <%Zd, %Zd>\n",E,N);
+					gmp_printf("Chave Pública <E,N>: <%Zd, %Zd>\n",E,N);
 				}
+				cout << "Gerando a chave privada..." << endl;
 				chave_privada(D,E,PQ); // chave privada = <D,N>
-				gmp_printf("Chave Privada (D,N): <%Zd, %Zd>\n",D,N);
+				gmp_printf("Chave Privada <D,N>: <%Zd, %Zd>\n",D,N);
 			}
 			break;
 
@@ -96,8 +106,8 @@ int main(int argc, char const *argv[]){ // arrumar, ver aula 31/08
 				cout << "Qual quer executar ?" << endl;
 				cout << "\t[1] Raiz Quadrada" << endl;
 				cout << "\t[2] Aleatórios" << endl;
-				cout << "\t[3] Ambos, Raiz Quadrada primeiro" << endl;
-				cout << "\t[4] Ambos, Aleatórios primeiro" << endl;
+				cout << "\t[3] Ambos, Raiz Quadrada Primeiro" << endl;
+				cout << "\t[4] Ambos, Aleatórios Primeiro" << endl;
 				cout << "\t[5] Voltar" << endl;
 				cin >> SubEscolha;
 
@@ -134,7 +144,7 @@ int main(int argc, char const *argv[]){ // arrumar, ver aula 31/08
 					break;
 
 					case 3:{
-						cout << "Executando ambas, começando pela Raiz Quadrda..." << endl;
+						cout << "Executando ambos, começando pela Raiz Quadrda..." << endl;
 
 						auto inicio = chrono::high_resolution_clock::now();
 						forcabruta_quadrado(P1,Q1,N);
@@ -161,7 +171,7 @@ int main(int argc, char const *argv[]){ // arrumar, ver aula 31/08
 					break;
 
 					case 4:{
-						cout << "Executando ambas, começando pelo Primos Aleatórios..." << endl;
+						cout << "Executando ambos, começando pelo Primos Aleatórios..." << endl;
 
 						auto inicio = chrono::high_resolution_clock::now();
 						forcabruta_aleatoria(P1,Q1,N);

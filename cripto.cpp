@@ -38,7 +38,6 @@ void criptografar_arquivo(mpz_t E, mpz_t N){
 		// convertendo o texto lido em ASCII
 		for(unsigned int j = 0; j < TextoLido.length(); j++){
 			Letra = TextoLido[j];
-			//cout << "Letra Lida: " << Letra << endl;
 			if(Letra != ' ')
 				LinhaASCII.push_back(int(Letra));
 			else
@@ -48,10 +47,6 @@ void criptografar_arquivo(mpz_t E, mpz_t N){
 		LinhaASCII.clear();
 	}
 
-//		for(unsigned int j = 0; j < TextoASCII.size(); j++)
-//			for(unsigned int k = 0; k < TextoASCII[j].size(); k++)
-//				cout << TextoASCII[j][k] << endl;
-
 	for(unsigned int j = 0; j < TextoASCII.size(); j++){
 		for(unsigned int k = 0; k < TextoASCII[j].size(); k++){
 			// cifrando o texto lido
@@ -60,13 +55,10 @@ void criptografar_arquivo(mpz_t E, mpz_t N){
 				continue;
 			}
 			mpz_set_ui(Aux, TextoASCII[j][k]);
-			//cout << "Aux: " << Aux << endl;
 			mpz_powm(LetraCifrada,Aux,E,N);
-			//gmp_printf("LetraCifrada: %Zd \n",LetraCifrada);
 
 			string AuxString(mpz_get_str(NULL,10,LetraCifrada));
 			LinhaCifrada.push_back(AuxString);
-			//cout << "AuxString: " << AuxString << endl;
 		}
 		TextoCifrado.push_back(LinhaCifrada);
 		LinhaCifrada.clear();
@@ -104,8 +96,8 @@ void descriptografar_arquivo(mpz_t D, mpz_t N){
 	vector<int> LinhaASCII;
 	vector<vector<int>> TextoASCII;
 
-	fstream ArquivoCifrado; // lê do arquivo cifrado
-	ofstream ArquivoDecifrado; // escreve no arquivo decifrado
+	fstream ArquivoCifrado; 
+	ofstream ArquivoDecifrado; 
 
 	SourceFILENAME = "CRIPTO-"+FILENAME;
 	OutFILENAME = "DECRIPTO-"+FILENAME;
@@ -117,14 +109,13 @@ void descriptografar_arquivo(mpz_t D, mpz_t N){
 		return;
 	}
 
-	while(getline(ArquivoCifrado,TextoLido)){ // decodificando cada linha
-		// Decifrando texto lido do arquivo 
+	while(getline(ArquivoCifrado,TextoLido)){ 
 		stringstream Stream(TextoLido); 
 
-		while(getline(Stream,StringAuxiliar,' ')){ // decodificando cada letra
+		while(getline(Stream,StringAuxiliar,' ')){ 
 			
 			if(StringAuxiliar == "x"){
-				LinhaASCII.pop_back();
+				LinhaASCII.pop_back(); // tirando o último espaço desnecessário
 				TextoASCII.push_back(LinhaASCII);
 				LinhaASCII.clear();
 				continue;

@@ -1,5 +1,5 @@
-// geração das chaves publica e privada
 #include"chaves.h"
+// geração das chaves publica e privada
 
 int TOTALBITS; // necessário definir aqui tbm pq no header "main_header" a variável esta definida como extern
 // isto é, o valor dela é definida em algum lugar e o linker descobre onde é isso
@@ -57,17 +57,17 @@ void inverso_modular(mpz_t D, mpz_t E, mpz_t PQ){
 	mpz_set_ui(Y,0);
 
 	while(mpz_cmp_ui(A,1) > 0){
-		mpz_fdiv_q(Quociente,A,B); // Q = A/B
+		mpz_fdiv_q(Quociente,A,B);
 		
-		mpz_set(Auxiliar,B); // Auxiliar = B
-		mpz_fdiv_r(B,A,B); // B = A % B
-		mpz_set(A,Auxiliar); // A = Auxiliar
-		mpz_set(Auxiliar, Y); // Auxiliar = Y
+		mpz_set(Auxiliar,B);
+		mpz_fdiv_r(B,A,B);
+		mpz_set(A,Auxiliar);
+		mpz_set(Auxiliar, Y);
 		
-		mpz_set(Auxiliar2,X); // Auxiliar2 = X
-		mpz_submul(Auxiliar2, Quociente, Y);  // Auxiliar2 = Auxiliar2 - Quociente * Y
-		mpz_set(Y,Auxiliar2); // Y = Auxiliar2 <==> Y = X - Quociente * Y
-		mpz_set(X,Auxiliar); // X = Auxiliar
+		mpz_set(Auxiliar2,X);
+		mpz_submul(Auxiliar2, Quociente, Y);
+		mpz_set(Y,Auxiliar2);
+		mpz_set(X,Auxiliar);
 	}
 	
 	if(mpz_sgn(X) == -1)
@@ -110,7 +110,6 @@ void primo_aleatorio(mpz_t Resultado, mpz_t Verificador){
 
     gmp_randseed_ui(Estado,time(NULL)); 
     mpz_urandomb(PrimoGerado,Estado,TOTALBITS); 
-    // gera um número aleatório de até <TOTALBITS> bits
 
 	if(mpz_cmp_ui(Verificador, 0) == 0){ // não foi gerado outro numero primo
 		while(!(provavelmente_primo(PrimoGerado, Estado)))
@@ -121,7 +120,6 @@ void primo_aleatorio(mpz_t Resultado, mpz_t Verificador){
 	}
 
     mpz_set(Resultado,PrimoGerado); 
-    // mpz_clear(PrimoGerado);
     gmp_randclear(Estado);
 }
 
