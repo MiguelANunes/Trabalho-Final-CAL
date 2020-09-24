@@ -124,7 +124,7 @@ int main(int argc, char const *argv[]){
 						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
 
 						chrono::duration<double> decorrido = termino - inicio;
-						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+						cout << "Tempo Decorrido: " << decorrido.count() << " segundos." << endl;
 					}
 					break;
 
@@ -139,7 +139,7 @@ int main(int argc, char const *argv[]){
 						cout << "Encontrou os seguintes divisores de N:" << endl;
 						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
 						chrono::duration<double> decorrido = termino - inicio;
-						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+						cout << "Tempo Decorrido: " << decorrido.count() << " segundos." << endl;
 					}
 					break;
 
@@ -154,7 +154,7 @@ int main(int argc, char const *argv[]){
 						cout << "Encontrou os seguintes divisores de N:" << endl;
 						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
 						chrono::duration<double> decorrido = termino - inicio;
-						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+						cout << "Tempo Decorrido: " << decorrido.count() << " segundos." << endl;
 
 						cout << "Executando método dos Primos Aleatórios..." << endl;
 
@@ -166,7 +166,7 @@ int main(int argc, char const *argv[]){
 						cout << "Encontrou os seguintes divisores de N:" << endl;
 						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
 						decorrido = termino - inicio;
-						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+						cout << "Tempo Decorrido: " << decorrido.count() << " segundos." << endl;
 					}
 					break;
 
@@ -181,7 +181,7 @@ int main(int argc, char const *argv[]){
 						cout << "Encontrou os seguintes divisores de N:" << endl;
 						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
 						chrono::duration<double> decorrido = termino - inicio;
-						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+						cout << "Tempo Decorrido: " << decorrido.count() << " segundos." << endl;
 
 						cout << "Executando método da Raiz Quadrda..." << endl;
 						inicio = chrono::high_resolution_clock::now();
@@ -192,7 +192,7 @@ int main(int argc, char const *argv[]){
 						cout << "Encontrou os seguintes divisores de N:" << endl;
 						gmp_printf("\tP = %Zd \n\tQ = %Zd \n",P1,Q1);
 						decorrido = termino - inicio;
-						cout << "Tempo Decorrido: " << decorrido.count() << endl;
+						cout << "Tempo Decorrido: " << decorrido.count() << " segundos." << endl;
 					}
 					break;
 
