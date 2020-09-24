@@ -33,7 +33,7 @@ void forcabruta_aleatoria(mpz_t Fator1, mpz_t Fator2, mpz_t NFatorar){
 
 	while(true){
 		primo_aleatorio(PrimoAleatorio, zero);
-		if(mpz_divisible_p(NFatorar, PrimoAleatorio)){
+		if(mpz_divisible_p(NFatorar, PrimoAleatorio) && (mpz_cmp_ui(PrimoAleatorio, 1) > 0)){
 			mpz_set(Fator1, PrimoAleatorio);
 			mpz_divexact(Fator2, NFatorar, PrimoAleatorio);
 			return;
